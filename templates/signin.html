@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGN_IN PAGE - Cars & Auto Spare Parts Marketplace</title>
+    <meta name="description"
+        content="GARAGE - The largest marketplace for used cars and auto spare parts. Buy and sell vehicles, find genuine auto parts, spare parts, connect with trusted sellers countrywide.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+    <header>
+        <h1 class="garage-title">EMPEROR GARAGE</h1>
+    </header>
+    <div id="signinPopup" class="modal">
+        <div class="popup-content">
+            <div style="margin: 0px,10px;" class="popup-header">
+                <h2>🔐Sellers Sign In</h2>
+            </div>
+            <div class="popup-body">
+                <form id="signinFormPopup">
+                    <div class="popup-form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="popupEmail" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="popup-form-group">
+                        <label>Password</label>
+                        <input type="password" id="popupPassword" placeholder="Enter your password" required>
+                    </div>
+                    <div id="popupspinner" class="spinner"></div>
+                    <button type="submit" class="popup-submit-btn">Sign In</button>
+                </form>
+                <div class="message" id="popupmessageBox"></div>
+                <div> </div>
+                <div class="signup-link">
+                    Don't have an account? <a href="/signup" id="signupLink">Sign up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

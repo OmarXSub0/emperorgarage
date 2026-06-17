@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GARAGE - Seller Signup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+
+    <div class="signup-container">
+        <a href="/" style="text-decoration: none;">
+            <h1 class="garage-title">GARAGE</h1>
+        </a>
+        <h2>Dealer Registration</h2>
+
+        <form id="signupForm" method="POST">
+            <div class="form-group">
+                <label>Business Name</label>
+                <input type="text" name="business_name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" required>
+            </div>
+            <!--
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" name="phone" required>
+            </div>-->
+
+            <div class="form-group">
+                <label>Business Type</label>
+                <select name="business_type" required>
+                    <option value="cars">Car Dealer</option>
+                    <option value="parts">Spare Parts Seller</option>
+                    <option value="both">Both</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" required>
+            </div>
+            <div id="popupspinner" class="spinner"></div>
+
+            <button type="submit" class="submit-btn">Register as Seller</button>
+        </form>
+
+        <div id="popupmessageS" class="message"></div>
+
+        <p style="text-align: center; margin-top: 1rem;">
+            <a href="/" style="color: #00ff41;">← Back to Home</a>
+        </p>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

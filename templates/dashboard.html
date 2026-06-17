@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GARAGE - Seller Dashboard</title>
+    <meta name="google-adsense-account" content="ca-pub-1070960410335549">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+
+    <header>
+        <h1 class="garage-title">EMPEROR_de_GARAGE</h1>
+        <nav>
+            <a href="/" class="nav-link">🏠 Home</a>
+            <span class="welcome">{{ business_name }}!</span>
+            <a href="/logout" class="nav-link">🚪 Logout</a>
+        </nav>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="add-product-section">
+            <h2>Add New Product</h2>
+            <form id="productForm" enctype="multipart/form-data">
+                <div class="form-row">
+                    <input type="text" name="name" placeholder="Product Name" required>
+                    <select name="category" required>
+                        <option value="cars">🚗 Car</option>
+                        <option value="parts">🔧 Auto Part</option>
+                    </select>
+                </div>
+                <p style="color: red; margin-bottom: 15px;text-align: center; ">
+                    SELLING A CAR?___YOU ARE TO ADD 2000 TO YOUR INTENDED
+                    SELLING PRICE THAT AMOUNT IS EMPEROR GARAGE's COMMISSION</p>
+                <div class="form-row">
+                    <input type="number" name="price" placeholder="Price ₵ 62000" step="100.00" required>
+                    <input type="number" name="stock" placeholder="Stock Quantity" required>
+                    <input type="number" name="phone" placeholder="Phone" required>
+                    <input type="text" name="location" placeholder="Location eg.Accra-Taifa" required>
+                </div>
+                <textarea name="description" placeholder="Product Description" rows="3" required></textarea>
+                <input type="file" name="image" accept="image/*">
+                <input type="file" name="image1" accept="image/*">
+                <input type="file" name="image2" accept="image/*">
+                <input type="file" name="image3" accept="image/*">
+                <input type="file" name="image4" accept="image/*">
+                <input type="file" name="image5" accept="image/*">
+                <div id="popupspinner" class="spinner"></div>
+                <button type="submit" class="submit-btn">Add Product</button>
+            </form>
+            <div id="popupmessage" class="message"></div>
+        </div>
+        <div class="products-list">
+            <h2>📦 Your Products</h2>
+            <div class="dashboard-products">
+                {% for product in products %}
+                <div class="dashboard-product-card">
+                    <div class="product-header">
+                        <h3 class="product-name">{{ product.name }}</h3>
+                        <button id="deletebtn" class="delete-product-btn" onclick="deleteProduct('{{ product.id }}')">
+                            🗑️ Delete
+                        </button>
+                    </div>
+
+                    <div class="product-images-horizontal">
+                        {% set image_list = product.images if product.images else product.image_urls if
+                        product.image_urls else [] %}
+
+                        {% if image_list and image_list|length > 0 %}
+                        <div class="horizontal-scroll-container">
+                            <div class="image-row">
+                                {% for image in image_list %}
+                                {% if image %}
+                                <div class="horizontal-image-item">
+                                    <img src="{{ image }}" alt="Image {{ loop.index }}" class="horizontal-image"
+                                        onclick="openImageModal('{{ image }}', '{{ product.name }}')"
+                                        onerror="this.parentElement.innerHTML='<div class=\'image-placeholder\'><br>Failed to load</div>'">
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+
+                                {# Add placeholders for missing images up to 6 total #}
+                                {% for i in range(6 - (image_list|length)) %}
+                                <div class="horizontal-image-item">
+                                    <div class="image-placeholder">
+                                        <br>No Image
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="image-row">
+                            {% for i in range(6) %}
+                            <div class="horizontal-image-item">
+                                <div class="image-placeholder">
+                                    <br>No Image
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="product-info">
+                        <div class="info-row">
+                            <span class="info-label">Price:</span>
+                            <span class="product-price">₵{{ "%.0f"|format(product.price|float) }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Phone:</span>
+                            <span class="product-phone">{{ product.phone }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Location:</span>
+                            <span class="product-location">{{ product.location }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Stock:</span>
+                            <span class="product-stock">{{ product.stock }} units</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Category:</span>
+                            <small class="product-category">
+                                {% if product.category == 'cars' %}🚗 Car{% else %}🔧 Auto Part{% endif %}
+                            </small>
+                        </div>
+                        {% if product.description %}
+                        <div class="info-row">
+                            <span class="info-label">Description:</span>
+                            <span class="product-description">{{ product.description }}</span>
+                        </div>
+                        {% endif %}
+                        <div class="info-row">
+                            <span class="info-label">Images:</span>
+                            <span class="image-count">{{ image_list|length if image_list else 0 }} / 6 images</span>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p style="color: #00ff41; text-align: center;">No products yet. Add your first product above!</p>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div id="imageModal" class="image-modal" onclick="closeImageModal()">
+            <span class="close-modal">&times;</span>
+            <img class="modal-content" id="modalImage">
+            <div id="modalCaption"></div>
+        </div>
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

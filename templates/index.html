@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMPEROR_DE_GARAGE - Cars & Auto Spare Parts Marketplace</title>
+    <meta name="description"
+        content="EMPEROR  GARAGE - The largest marketplace for used cars and auto spare parts. Buy and sell vehicles, find genuine auto parts, spare parts, connect with trusted sellers countrywide.">
+    <meta name="google-adsense-account" content="ca-pub-1070960410335549">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+
+    <header>
+        <h1 class="garage-title">EMPEROR GARAGE</h1>
+        <nav>
+            <a href="#cars" class="nav-link">🚗 Cars</a>
+            <a href="#parts" class="nav-link">🔧 Spare Parts</a>
+            <a href="/signin" class="nav-link signupLink">📦 Sellers</a>
+        </nav>
+    </header>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            "apiKey": "AIzaSyCbi72B8iT5P0VAvE_eix6nsuDDzlqTVWk",
+            "authDomain": "emperorgarage.firebaseapp.com",
+            "databaseURL": "https://emperorgarage-default-rtdb.firebaseio.com/",
+            "projectId": "emperorgarage",
+            "storageBucket": "emperorgarage.firebasestorage.app",
+            "messagingSenderId": "405891329254",
+            "appId": "1:405891329254:web:8c511fbcccf25fd9d01f27"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <div class="search-section">
+        <div class="search-container">
+            <div class="search-icon"></div>
+            <input type="text" id="searchInput" class="search-input"
+                placeholder="Search for cars, spare parts, brands..." autocomplete="on">
+            <button id="voiceSearchBtn" class="voice-search-btn" title="Voice Search">🎤</button>
+            <button id="searchButton" class="search-button">FIND</button>
+        </div>
+
+        <div id="searchSuggestions" class="search-suggestions"></div>
+
+        <div class="recent-searches">
+            <div class="recent-header">
+                <span>🕐 Recent Searches</span>
+                <button id="clearRecentBtn" class="clear-recent-btn">Clear All</button>
+            </div>
+            <div id="recentSearchesContainer" class="recent-list"></div>
+        </div>
+
+        <div id="resultCount" class="result-count"></div>
+
+        <div class="search-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="cars">🚗 Cars Only</button>
+            <button class="filter-btn" data-filter="parts">🔧 Spare Parts Only</button>
+        </div>
+    </div>
+
+    <div id="noResults" class="no-results" style="display: none;">
+        <p>No results found for "<span id="searchTerm"></span>"</p>
+        <div id="noResultsSuggestions"></div>
+    </div>
+    <section id="cars" class="category-section">
+        <h2 class="section-title">🔥 HOT SALES 🔥</h2>
+        <div class="products-grid" id="carsGrid">
+            {% if cars and cars|length > 0 %}
+            {% for car in cars %}
+            <div class="product-card" data-category="cars" data-product-seller_id="{{ car.id }}"
+                data-product-type="car">
+                <div class="image-gallery">
+                    <div class="main-image-container">
+                        <img class="main-image" data-product-seller_id="{{ car.id }}"
+                            src="{{ car.images[0] if car.images and car.images[0] else '/static/placeholder.png' }}"
+                            alt="{{ car.name|escape }}" data-images="{{ car.images|tojson|forceescape }}">
+                    </div>
+                    <div class="thumbnail-grid">
+                        {% for i in range(6) %}
+                        <div class="thumbnail" data-product-id="{{ car.id }}" data-image-index="{{ i }}">
+                            {% if car.images and car.images[i] %}
+                            <img src="{{ car.images[i] }}" alt="Image {{ i+1 }}"
+                                onerror="this.src='/static/placeholder.png'">
+                            {% else %}
+                            <div class="thumbnail-placeholder">
+                                📷<br>Img {{ i+1 }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <h3>{{ car.name|escape }}</h3>
+                <p>{{ (car.description[:500] if car.description else 'No description available')|escape }}</p>
+                <div class="price">₵{{ "%.0f"|format(car.price|float) }}</div>
+                <button class="call-btn" data-product-name="{{ car.name|escape }}" data-product-type="car"
+                    data-product-phone="{{ car.phone }}" data-product-location="{{ car.location }}">CONTACT</button>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="no-products">No cars available at the moment.</div>
+            {% endif %}
+        </div>
+    </section>
+    <section id="parts" class="category-section">
+        <h2 class="section-title"> SPARE🔧PARTS</h2>
+        <div class="products-grid" id="partsGrid">
+            {% if parts and parts|length > 0 %}
+            {% for part in parts %}
+            <div class="product-card" data-category="parts" data-product-id="{{ part.id }}" data-product-type="part">
+                <div class="image-gallery">
+                    <div class="main-image-container">
+                        <img class="main-image" data-product-id="{{ part.id }}"
+                            src="{{ part.images[0] if part.images and part.images[0] else '/static/placeholder.png' }}"
+                            alt="{{ part.name|escape }}">
+                    </div>
+                    <div class="thumbnail-grid">
+                        {% for i in range(6) %}
+                        <div class="thumbnail" data-product-id="{{ part.id }}" data-image-index="{{ i }}">
+                            {% if part.images and part.images[i] %}
+                            <img src="{{ part.images[i] }}" alt="Image {{ i+1 }}"
+                                onerror="this.src='/static/placeholder.png'">
+                            {% else %}
+                            <div class="thumbnail-placeholder">
+                                📷<br>Img {{ i+1 }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <h3>{{ part.name|escape }}</h3>
+                <p>{{ (part.description[:500] if part.description else 'No description available')|escape }}</p>
+                <div class="price">₵{{ "%.0f"|format(part.price|float) }}</div>
+                <button class="call-btn" data-product-name="{{ part.name|escape }}" data-product-type="part"
+                    data-product-phone="{{ part.phone }}" data-product-location="{{ part.location }}">Call
+                    Dealer</button>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="no-products">No parts available at the moment.</div>
+            {% endif %}
+        </div>
+    </section>
+
+    <div class="brands-section">
+        <h3>🌍 ANY CAR BRANDS YOU WANT, WE HAVE 🌍</h3>
+    </div>
+    <div>
+        <div class="brands-grid" id="brandsGrid"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
