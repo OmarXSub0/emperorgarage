@@ -21,6 +21,7 @@ firebase_admin.initialize_app(cred, {
     "databaseURL": "https://emperorgarage-default-rtdb.firebaseio.com/",
     "storageBucket": "emperorgarage.firebasestorage.app"
 })
+pyre_auth = auth
 db = firestore.client()
 bucket = storage.bucket()
 
