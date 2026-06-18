@@ -1125,7 +1125,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // CLOSE POPUP - ESC key
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && popupModal.style.display === 'block') {
                 popupModal.style.display = 'none';
