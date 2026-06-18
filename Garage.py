@@ -34,8 +34,8 @@ firebaseConfig = {
     "messagingSenderId": "405891329254", 
     "appId": "1:405891329254:web:8c511fbcccf25fd9d01f27",
 } 
-firebase_py = firebase_admin.initialize_app(cred, firebaseConfig)
-pyre_auth = firebase_py.auth()
+#firebase_py = firebase_admin.initialize_app(cred, firebaseConfig)
+#pyre_auth = firebase_py.auth()
 
 @app.route('/static/placeholder.png')
 def placeholder_image():
