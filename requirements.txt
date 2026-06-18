@@ -1,4 +1,4 @@
 flask==2.3.3
 firebase-admin==6.2.0
-pyrebase4==4.5.0
 python-dotenv==1.0.0
+setuptools==80.10.2

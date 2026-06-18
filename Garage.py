@@ -8,7 +8,7 @@ import json
 import io
 import secrets
 import os
-import pyrebase
+#import pyrebase
 from functools import wraps
 import uuid
 from dotenv import load_dotenv
@@ -35,8 +35,6 @@ firebaseConfig = {
     "messagingSenderId": "405891329254", 
     "appId": "1:405891329254:web:8c511fbcccf25fd9d01f27",
 } 
-#firebase_py = firebase_admin.initialize_app(cred,firebaseConfig)
-#pyre_auth = firebase_py.auth()
 
 @app.route('/static/placeholder.png')
 def placeholder_image():
@@ -516,4 +514,4 @@ def get_brands():
     return jsonify(brands)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(app, host='0.0.0.0', port=8080, threads=8)
