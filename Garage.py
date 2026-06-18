@@ -17,8 +17,11 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY','844cac20884a4595ca8349dddea8a2a94156777b3e157aa6249b03a6a89f3b85')
 cred = credentials.Certificate("serviceAccountKey.json")
-firebase_admin.initialize_app(cred, {'storageBucket': 'emperorgarage.firebasestorage.app'})
-
+firebase_admin.initialize_app(cred, {
+    "databaseURL": "https://emperorgarage-default-rtdb.firebaseio.com/",
+    "storageBucket": "emperorgarage.firebasestorage.app"
+})
+pyre_auth = auth
 db = firestore.client()
 bucket = storage.bucket()
 
@@ -32,8 +35,8 @@ firebaseConfig = {
     "messagingSenderId": "405891329254", 
     "appId": "1:405891329254:web:8c511fbcccf25fd9d01f27",
 } 
-firebase_py = pyrebase.initialize_app(firebaseConfig)
-pyre_auth = firebase_py.auth()
+#firebase_py = firebase_admin.initialize_app(cred,firebaseConfig)
+#pyre_auth = firebase_py.auth()
 
 @app.route('/static/placeholder.png')
 def placeholder_image():
@@ -513,4 +516,4 @@ def get_brands():
     return jsonify(brands)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
