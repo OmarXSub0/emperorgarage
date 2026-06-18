@@ -8,7 +8,7 @@ import json
 import io
 import secrets
 import os
-import pyrebase
+#import pyrebase
 from functools import wraps
 import uuid
 from dotenv import load_dotenv
