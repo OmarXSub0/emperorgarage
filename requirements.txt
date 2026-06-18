@@ -1,5 +1,5 @@
 flask==2.3.3
-gunicorn-26.0.0
+gunicorn-25.0.0
 firebase-admin==6.2.0
 pyrebase4==4.5.0
 python-dotenv==1.0.0
