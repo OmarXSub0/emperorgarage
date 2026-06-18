@@ -17,8 +17,10 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY','844cac20884a4595ca8349dddea8a2a94156777b3e157aa6249b03a6a89f3b85')
 cred = credentials.Certificate("serviceAccountKey.json")
-firebase_admin.initialize_app(cred, {'storageBucket': 'emperorgarage.firebasestorage.app'})
-
+firebase_admin.initialize_app(cred, {
+    "databaseURL": "https://emperorgarage-default-rtdb.firebaseio.com/",
+    "storageBucket": "emperorgarage.firebasestorage.app"
+})
 db = firestore.client()
 bucket = storage.bucket()
 
