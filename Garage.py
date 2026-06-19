@@ -13,8 +13,14 @@ from functools import wraps
 import uuid
 from dotenv import load_dotenv
 # Refresh credentials manually
+from google.auth import default
 from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
+
+credentials, project = default()
+
+# Check if credentials are expired (not certificate)
+if credentials.expired:
+    credentials.refresh(Request())
 
 # If using credentials object
 
@@ -30,8 +36,9 @@ firebase_admin.initialize_app(cred, {
 pyre_auth = auth
 db = firestore.client()
 bucket = storage.bucket()
-if cred and cred.expired and cred.refresh_token:
-    cred.refresh(Request())
+credentials, project = default()
+if credentials.expired:
+    credentials.refresh(Request())
     
 print("connected successfully")
 firebaseConfig = {
