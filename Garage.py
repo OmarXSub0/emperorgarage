@@ -27,6 +27,17 @@ firebase_admin.initialize_app(cred, {
     "storageBucket": "emperorgarage.firebasestorage.app"
 })
 pyre_auth = auth
+ef get_firestore_client():
+    """Try multiple methods to get Firestore client"""
+    
+    # Try different credential paths
+    possible_paths = [
+        './serviceAccountKey.json',
+        'serviceAccountKey.json',
+        os.path.expanduser('~/Downloads/serviceAccountKey.json'),
+        os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', ''),
+        '/app/serviceAccountKey.json',  # Docker
+    ]
 db = firestore.Client()
 bucket = storage.bucket()
 
