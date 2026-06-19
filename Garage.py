@@ -16,12 +16,6 @@ from dotenv import load_dotenv
 from google.auth import default
 from google.auth.transport.requests import Request
 
-credentials, project = default()
-
-# Check if credentials are expired (not certificate)
-if credentials.expired:
-    credentials.refresh(Request())
-
 load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY','844cac20884a4595ca8349dddea8a2a94156777b3e157aa6249b03a6a89f3b85')
