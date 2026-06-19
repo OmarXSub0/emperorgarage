@@ -27,31 +27,37 @@ firebase_admin.initialize_app(cred, {
     "storageBucket": "emperorgarage.firebasestorage.app"
 })
 pyre_auth = auth
-def get_firestore_client():
-    """Try multiple methods to get Firestore client"""
-    
-    # Try different credential paths
-    possible_paths = [
-        './serviceAccountKey.json',
-        'serviceAccountKey.json',
-        os.path.expanduser('~/Downloads/serviceAccountKey.json'),
-        os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', ''),
-        '/app/serviceAccountKey.json',
-    ]
+KEY_FILE = './serviceAccountKey.json'  # Update this
 
- for path in possible_paths:
-        if path and os.path.exists(path):
-            try:
-                print(f"🔄 Trying credentials from: {path}")
-                credentials = service_account.Credentials.from_service_account_file(
-                    path,
-                    scopes=['https://www.googleapis.com/auth/datastore']
-                )
-                db = firestore.Client(credentials=credentials, project='emperorgarage')
-                print(f"✅ Firestore client initialized using: {path}")
-                return db
-            except Exception as e:
-                print(f"⚠️ Failed with {path}: {e}")
+try:
+    # Load credentials
+    credentials = service_account.Credentials.from_service_account_file(
+        KEY_FILE,
+        scopes=['https://www.googleapis.com/auth/datastore']
+    )
+    
+    # Create client
+    db = firestore.Client(
+        credentials=credentials,
+        project='emperorgarage'
+    )
+    
+    print("✅ Firestore connected")
+    
+    # Test
+    doc_ref = db.collection('test').document('hello')
+    doc_ref.set({'message': 'Hello World!'})
+    print("✅ Document created")
+    
+    doc = doc_ref.get()
+    if doc.exists:
+        print(f"📄 Data: {doc.to_dict()}")
+    
+    doc_ref.delete()
+    print("✅ Test complete")
+    
+except Exception as e:
+    print(f"❌ Error: {e}")
     
 db = firestore.Client()
 bucket = storage.bucket()
