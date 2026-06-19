@@ -27,7 +27,7 @@ firebase_admin.initialize_app(cred, {
     "storageBucket": "emperorgarage.firebasestorage.app"
 })
 pyre_auth = auth
-db = firestore.client()
+db = firestore.Client()
 bucket = storage.bucket()
 
 KEY_PATH = './serviceAccountKey.json'  # CHANGE THIS
