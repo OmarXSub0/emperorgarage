@@ -27,7 +27,7 @@ firebase_admin.initialize_app(cred, {
 pyre_auth = auth
 db = firestore.client()
 bucket = storage.bucket()
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/serviceAccountKey.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './serviceAccountKey.json'
 
 credentials, project = default()
 if credentials.expired:
