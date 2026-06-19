@@ -36,12 +36,12 @@ def get_firestore_client():
         'serviceAccountKey.json',
         os.path.expanduser('~/Downloads/serviceAccountKey.json'),
         os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', ''),
-        '/app/serviceAccountKey.json',  # Docker
+        '/app/serviceAccountKey.json',
     ]
 db = firestore.Client()
 bucket = storage.bucket()
 
-KEY_PATH = './serviceAccountKey.json'  # CHANGE THIS
+KEY_PATH = './serviceAccountKey.json' 
 
 def validate_key_file(path):
     """Check if the key file is valid"""
