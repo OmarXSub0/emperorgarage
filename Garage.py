@@ -47,7 +47,7 @@ firebaseConfig = {
 import json
 import os
 
-KEY_PATH = '/path/to/your-service-key.json'  # CHANGE THIS
+KEY_PATH = './serviceAccountKey.json'  # CHANGE THIS
 
 def validate_key_file(path):
     """Check if the key file is valid"""
