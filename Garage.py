@@ -17,8 +17,7 @@ from google.cloud
 from google.oauth2 import service_account
 from google.auth import default
 from google.auth.transport.requests import Request
-from google.cloud.firestore_v1 import FirestoreClient
-from google.cloud.firestore_v1.gapic import firestore_client
+
 
 # Use the client library which handles authentication
 client = FirestoreClient()
