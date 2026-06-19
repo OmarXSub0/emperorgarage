@@ -38,6 +38,21 @@ def get_firestore_client():
         os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', ''),
         '/app/serviceAccountKey.json',
     ]
+
+ for path in possible_paths:
+        if path and os.path.exists(path):
+            try:
+                print(f"🔄 Trying credentials from: {path}")
+                credentials = service_account.Credentials.from_service_account_file(
+                    path,
+                    scopes=['https://www.googleapis.com/auth/datastore']
+                )
+                db = firestore.Client(credentials=credentials, project='emperorgarage')
+                print(f"✅ Firestore client initialized using: {path}")
+                return db
+            except Exception as e:
+                print(f"⚠️ Failed with {path}: {e}")
+    
 db = firestore.Client()
 bucket = storage.bucket()
 
