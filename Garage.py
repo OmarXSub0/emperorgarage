@@ -18,10 +18,6 @@ from google.oauth2 import service_account
 from google.auth import default
 from google.auth.transport.requests import Request
 
-
-# Use the client library which handles authentication
-client = FirestoreClient()
-
 load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY','844cac20884a4595ca8349dddea8a2a94156777b3e157aa6249b03a6a89f3b85')
