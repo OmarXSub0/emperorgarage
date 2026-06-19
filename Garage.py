@@ -22,9 +22,6 @@ credentials, project = default()
 if credentials.expired:
     credentials.refresh(Request())
 
-# If using credentials object
-
-    
 load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY','844cac20884a4595ca8349dddea8a2a94156777b3e157aa6249b03a6a89f3b85')
@@ -36,6 +33,8 @@ firebase_admin.initialize_app(cred, {
 pyre_auth = auth
 db = firestore.client()
 bucket = storage.bucket()
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './serviceAccountKey.json'
+
 credentials, project = default()
 if credentials.expired:
     credentials.refresh(Request())
