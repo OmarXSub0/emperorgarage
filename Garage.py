@@ -44,6 +44,62 @@ firebaseConfig = {
     "appId": "1:405891329254:web:8c511fbcccf25fd9d01f27",
 } 
 
+import json
+import os
+
+KEY_PATH = '/path/to/your-service-key.json'  # CHANGE THIS
+
+def validate_key_file(path):
+    """Check if the key file is valid"""
+    
+    print(f"Checking: {path}")
+    
+    # Check if file exists
+    if not os.path.exists(path):
+        print("❌ File does not exist")
+        return False
+    
+    # Check file size
+    size = os.path.getsize(path)
+    print(f"📄 File size: {size} bytes")
+    if size < 100:  # Too small
+        print("❌ File is too small - likely corrupted")
+        return False
+    
+    # Try to parse JSON
+    try:
+        with open(path, 'r') as f:
+            data = json.load(f)
+        
+        # Check required fields
+        required_fields = ['private_key', 'private_key_id', 'client_email', 'project_id']
+        missing = [f for f in required_fields if f not in data]
+        if missing:
+            print(f"❌ Missing required fields: {missing}")
+            return False
+        
+        # Check private key format
+        private_key = data['private_key']
+        if 'BEGIN PRIVATE KEY' not in private_key:
+            print("❌ Invalid private key format")
+            print(f"   First 100 chars: {private_key[:100]}")
+            return False
+        
+        print("✅ Key file appears valid")
+        print(f"   Service Account: {data['client_email']}")
+        print(f"   Project: {data['project_id']}")
+        return True
+        
+    except json.JSONDecodeError as e:
+        print(f"❌ Invalid JSON: {e}")
+        return False
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        return False
+
+# Run validation
+validate_key_file(KEY_PATH)
+
 @app.route('/static/placeholder.png')
 def placeholder_image():
     svg = '''<svg xmlns="http://www.w3.org/2000/svg" width="185" height="200" viewBox="0 0 300 200">
