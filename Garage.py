@@ -12,7 +12,13 @@ from waitress import serve
 from functools import wraps
 import uuid
 from dotenv import load_dotenv
+# Refresh credentials manually
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
 
+# If using credentials object
+
+    
 load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY','844cac20884a4595ca8349dddea8a2a94156777b3e157aa6249b03a6a89f3b85')
@@ -24,7 +30,9 @@ firebase_admin.initialize_app(cred, {
 pyre_auth = auth
 db = firestore.client()
 bucket = storage.bucket()
-
+if cred and cred.expired and cred.refresh_token:
+    cred.refresh(Request())
+    
 print("connected successfully")
 firebaseConfig = {
     "apiKey": "AIzaSyCbi72B8iT5P0VAvE_eix6nsuDDzlqTVWk",     
