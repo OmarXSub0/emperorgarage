@@ -12,9 +12,16 @@ from waitress import serve
 from functools import wraps
 import uuid
 from dotenv import load_dotenv
-# Refresh credentials manually
+import grpc
+from google.cloud 
+from google.oauth2 import service_account
 from google.auth import default
 from google.auth.transport.requests import Request
+from google.cloud.firestore_v1 import FirestoreClient
+from google.cloud.firestore_v1.gapic import firestore_client
+
+# Use the client library which handles authentication
+client = FirestoreClient()
 
 load_dotenv()
 app = Flask(__name__)
