@@ -13,7 +13,7 @@ from functools import wraps
 import uuid
 from dotenv import load_dotenv
 import grpc
-from google.cloud 
+from google.cloud import firestore
 from google.oauth2 import service_account
 from google.auth import default
 from google.auth.transport.requests import Request
