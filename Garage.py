@@ -27,7 +27,7 @@ firebase_admin.initialize_app(cred, {
     "storageBucket": "emperorgarage.firebasestorage.app"
 })
 pyre_auth = auth
-ef get_firestore_client():
+def get_firestore_client():
     """Try multiple methods to get Firestore client"""
     
     # Try different credential paths
