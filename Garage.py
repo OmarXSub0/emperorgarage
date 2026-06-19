@@ -27,25 +27,6 @@ firebase_admin.initialize_app(cred, {
 pyre_auth = auth
 db = firestore.client()
 bucket = storage.bucket()
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './serviceAccountKey.json'
-
-credentials, project = default()
-if credentials.expired:
-    credentials.refresh(Request())
-    
-print("connected successfully")
-firebaseConfig = {
-    "apiKey": "AIzaSyCbi72B8iT5P0VAvE_eix6nsuDDzlqTVWk",     
-    "authDomain": "emperorgarage.firebaseapp.com",  
-    "databaseURL": "https://emperorgarage-default-rtdb.firebaseio.com/", 
-    "projectId": "emperorgarage",       
-    "storageBucket": "emperorgarage.firebasestorage.app", 
-    "messagingSenderId": "405891329254", 
-    "appId": "1:405891329254:web:8c511fbcccf25fd9d01f27",
-} 
-
-import json
-import os
 
 KEY_PATH = './serviceAccountKey.json'  # CHANGE THIS
 
@@ -99,6 +80,24 @@ def validate_key_file(path):
 
 # Run validation
 validate_key_file(KEY_PATH)
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './serviceAccountKey.json'
+
+credentials, project = default()
+if credentials.expired:
+    credentials.refresh(Request())
+    
+print("connected successfully")
+firebaseConfig = {
+    "apiKey": "AIzaSyCbi72B8iT5P0VAvE_eix6nsuDDzlqTVWk",     
+    "authDomain": "emperorgarage.firebaseapp.com",  
+    "databaseURL": "https://emperorgarage-default-rtdb.firebaseio.com/", 
+    "projectId": "emperorgarage",       
+    "storageBucket": "emperorgarage.firebasestorage.app", 
+    "messagingSenderId": "405891329254", 
+    "appId": "1:405891329254:web:8c511fbcccf25fd9d01f27",
+} 
+
 
 @app.route('/static/placeholder.png')
 def placeholder_image():
