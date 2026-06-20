@@ -63,7 +63,7 @@ def init_google_cloud_clients():
         print("✅ Credentials verified")
         
         print("🔄 Initializing Firestore...")
-        firestore_client = firestore.Client(
+            db = firestore.Client(
             credentials=credentials,
             project='emperorgarage'
         )
