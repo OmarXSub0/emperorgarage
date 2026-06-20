@@ -54,9 +54,7 @@ except Exception as e:
 
 def init_google_cloud_clients():
     """Initialize Firestore and Storage clients with hardcoded credentials"""
-    global db, bucket, storage_client, pyre_auth 
-        print("🔄 Creating Google Cloud credentials...")
-        
+    global db, bucket, storage_client, pyre_auth         
         credentials = service_account.Credentials.from_service_account_info(
             SERVICE_ACCOUNT_KEY,
             scopes=['https://www.googleapis.com/auth/cloud-platform']
