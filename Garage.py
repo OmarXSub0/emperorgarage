@@ -162,6 +162,10 @@ firebaseConfig = {
     "appId": "1:405891329254:web:8c511fbcccf25fd9d01f27",
 } 
 
+   db = firestore.Client(
+        credentials=credentials,
+        project='emperorgarage'
+    )
 
 @app.route('/static/placeholder.png')
 def placeholder_image():
