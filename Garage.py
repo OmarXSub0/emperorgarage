@@ -161,10 +161,7 @@ firebaseConfig = {
     "messagingSenderId": "405891329254", 
     "appId": "1:405891329254:web:8c511fbcccf25fd9d01f27",
 } 
-db = firestore.Client(
-        credentials=credentials,
-        project='emperorgarage'
-    )
+db = firestore.client()
 
 @app.route('/static/placeholder.png')
 def placeholder_image():
