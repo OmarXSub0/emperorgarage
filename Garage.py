@@ -17,90 +17,114 @@ from google.cloud import firestore
 from google.oauth2 import service_account
 from google.auth import default
 from google.auth.transport.requests import Request
-
 load_dotenv()
+
 app = Flask(__name__)
-app.secret_key = os.getenv('FLASK_SECRET_KEY','844cac20884a4595ca8349dddea8a2a94156777b3e157aa6249b03a6a89f3b85')
-cred = credentials.Certificate("serviceAccountKey.json")
-firebase_admin.initialize_app(cred, {
-    "databaseURL": "https://emperorgarage-default-rtdb.firebaseio.com/",
-    "storageBucket": "emperorgarage.firebasestorage.app"
-})
-pyre_auth = auth
-KEY_FILE = './serviceAccountKey.json'
+app.secret_key = os.getenv('FLASK_SECRET_KEY', '844cac20884a4595ca8349dddea8a2a94156777b3e157aa6249b03a6a89f3b85')
 
-SERVICE_ACCOUNT_KEY={"type": "service_account",
-  "project_id": "emperorgarage",
-  "private_key_id": "b00c63f7e233a970efea9b9491a8a2649b2d021b",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDaw2UAaFsKD8YH\nDKJptyZgpsnxkMJnVKNitJIPtgAidCk8cpb0BTxNnrJieX7pvjHo1zpIvb+yn318\nTd2Zll3Zluixr5dgueHPescRmIqMydH0da0W5TYzxioyYAqlAf3mgywVkH+XshFD\ndcuQTltXA9/29cQ8+dBIwYikjoSWitXIlUfMd6EuC80VBJFeTkBGvosCV/yxBKXQ\ni/MDZ4ePsG1QO/OtdYc+sef6rB+LyW/HG3ZMxpV168SUT4UVBR/ib049dvjoJJgg\n3DCzaER0sS2NvOYLbAUHi7Td1oRRxBBDjDwWZ0BDaLDYg30O1JKIFe1SbAGTj1Rv\nt915hgFtAgMBAAECggEAAO8OFpEbeGDGW9/YLqLXQVjc6lDPn6DLHMAAEpyYhg0g\nYu9rSQnfrsYjZUu2+Lj03hVTHJ3gvFq1bqsna8EqT+Q2xJFnEETi25+ey2qvBrhS\n0twQu9UJJPHu2q2xxfAK/SmorcPi44shSzwsvQY0mhu8YEG+z3LSioj29BreooTd\nrEXHf3K+ffojUi2DvqGo86/tZ/ZGZy2KE7rFPcqQd61/UdaaNP8MtMx4TlGtYYVD\nB2pLF8RPl8QU1n6ZoxNBvkbfavctvYYWbfR/sG8AtB3trbM2u7EC564jUSjv5TOp\nlMFPRpg5DwEBP7fj4yAU+QbIwBvlcV7um2JbYB9AkQKBgQD55zB2LMMjTZuGgBzs\nTvNd7EifJWTEk8J+n9stA68Vs5bYQZx7x6YJZJ/8U5lVyQ1meRTlJX7rvcTnEiJk\nBBCRDihedXfQn9DH52ZOp98qXwO7Hzv/hvkXta9/r77Pdaw62koT3qUxmk48l82E\nJ4xa8d8pU5UAOdBHN5km/qMynQKBgQDgGbdjX+JNLIB5idhjRISsgIxBhsPB4V8z\n+/ucE5KwUqNOvp9tSKKx7DX4qDuOU6XMvvmE+SfDRZrCcYhKUGxfq616kTsjEG9P\nJ+kNzZcpEwpJ0h6WiFfX3koFx5jqCZEN/oUo/eEH0Yndg51ljsYuy0iV4WwenkPD\nCQZ0J36pEQKBgQDQJiN0WwZSUmL3XaA5p+0HTzaR8DiFj7lRdN6/GLFttv8usz+e\nzgVbD4g+SHeQP3083B9uWZPk0VS/Tph8i/IskAlJ3Dfm+iaRSwko/KRiC2/1HSgB\nRzAU8ozyIrUg4ZeKEaXf9PPNZAREbgCNUc+TNKE3L9oMrRrxJrsXAsN19QKBgHQ1\nwby9nzvH5QOhsN2hTW+q5ZChUug6d8UcWZjRKZNX9ynBfikMrpm3VTGSA/hFdkgb\njIchMTZ45M0KVNO8qsZd34Mcxt7jCeWxW5B12XpKTl6DoKsNHwhpVFd07t4GgfsQ\nznq4VLZaObTuKHPeuvTPI9/dWtTx20/LYVZgmLURAoGATobybu6zXD3IdXyQ9eD0\ncpi5kyEzXMqeo8aAvPMs2UzHyR9QRYvp9VNNjhD+7GBjqPffeWyhG6FothZoKar/\nb0k/mXS5zBA5+VSTWXM19zM9t9a2leath+ZNICGTuIOJcFj0W6oQNGrcg3Yg+VJm\nQbQ+oWRcpWriCyguOAYfCcU=\n-----END PRIVATE KEY-----\n",
-  "client_email": "firebase-adminsdk-fbsvc@emperorgarage.iam.gserviceaccount.com",
-  "client_id": "118440247245060735413",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40emperorgarage.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"}
+SERVICE_ACCOUNT_KEY = {
+    "type": "service_account",
+    "project_id": "emperorgarage",
+    "private_key_id": "b00c63f7e233a970efea9b9491a8a2649b2d021b",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDaw2UAaFsKD8YH\nDKJptyZgpsnxkMJnVKNitJIPtgAidCk8cpb0BTxNnrJieX7pvjHo1zpIvb+yn318\nTd2Zll3Zluixr5dgueHPescRmIqMydH0da0W5TYzxioyYAqlAf3mgywVkH+XshFD\ndcuQTltXA9/29cQ8+dBIwYikjoSWitXIlUfMd6EuC80VBJFeTkBGvosCV/yxBKXQ\ni/MDZ4ePsG1QO/OtdYc+sef6rB+LyW/HG3ZMxpV168SUT4UVBR/ib049dvjoJJgg\n3DCzaER0sS2NvOYLbAUHi7Td1oRRxBBDjDwWZ0BDaLDYg30O1JKIFe1SbAGTj1Rv\nt915hgFtAgMBAAECggEAAO8OFpEbeGDGW9/YLqLXQVjc6lDPn6DLHMAAEpyYhg0g\nYu9rSQnfrsYjZUu2+Lj03hVTHJ3gvFq1bqsna8EqT+Q2xJFnEETi25+ey2qvBrhS\n0twQu9UJJPHu2q2xxfAK/SmorcPi44shSzwsvQY0mhu8YEG+z3LSioj29BreooTd\nrEXHf3K+ffojUi2DvqGo86/tZ/ZGZy2KE7rFPcqQd61/UdaaNP8MtMx4TlGtYYVD\nB2pLF8RPl8QU1n6ZoxNBvkbfavctvYYWbfR/sG8AtB3trbM2u7EC564jUSjv5TOp\nlMFPRpg5DwEBP7fj4yAU+QbIwBvlcV7um2JbYB9AkQKBgQD55zB2LMMjTZuGgBzs\nTvNd7EifJWTEk8J+n9stA68Vs5bYQZx7x6YJZJ/8U5lVyQ1meRTlJX7rvcTnEiJk\nBBCRDihedXfQn9DH52ZOp98qXwO7Hzv/hvkXta9/r77Pdaw62koT3qUxmk48l82E\nJ4xa8d8pU5UAOdBHN5km/qMynQKBgQDgGbdjX+JNLIB5idhjRISsgIxBhsPB4V8z\n+/ucE5KwUqNOvp9tSKKx7DX4qDuOU6XMvvmE+SfDRZrCcYhKUGxfq616kTsjEG9P\nJ+kNzZcpEwpJ0h6WiFfX3koFx5jqCZEN/oUo/eEH0Yndg51ljsYuy0iV4WwenkPD\nCQZ0J36pEQKBgQDQJiN0WwZSUmL3XaA5p+0HTzaR8DiFj7lRdN6/GLFttv8usz+e\nzgVbD4g+SHeQP3083B9uWZPk0VS/Tph8i/IskAlJ3Dfm+iaRSwko/KRiC2/1HSgB\nRzAU8ozyIrUg4ZeKEaXf9PPNZAREbgCNUc+TNKE3L9oMrRrxJrsXAsN19QKBgHQ1\nwby9nzvH5QOhsN2hTW+q5ZChUug6d8UcWZjRKZNX9ynBfikMrpm3VTGSA/hFdkgb\njIchMTZ45M0KVNO8qsZd34Mcxt7jCeWxW5B12XpKTl6DoKsNHwhpVFd07t4GgfsQ\nznq4VLZaObTuKHPeuvTPI9/dWtTx20/LYVZgmLURAoGATobybu6zXD3IdXyQ9eD0\ncpi5kyEzXMqeo8aAvPMs2UzHyR9QRYvp9VNNjhD+7GBjqPffeWyhG6FothZoKar/\nb0k/mXS5zBA5+VSTWXM19zM9t9a2leath+ZNICGTuIOJcFj0W6oQNGrcg3Yg+VJm\nQbQ+oWRcpWriCyguOAYfCcU=\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-fbsvc@emperorgarage.iam.gserviceaccount.com",
+    "client_id": "118440247245060735413",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40emperorgarage.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+}
 
-def get_firestore_client():
+try:
+    cred = firebase_credentials.Certificate("serviceAccountKey.json")
+    firebase_admin.initialize_app(cred, {
+        "databaseURL": "https://emperorgarage-default-rtdb.firebaseio.com/",
+        "storageBucket": "emperorgarage.firebasestorage.app"
+    })
+    pyre_auth = auth
+    print("✅ Firebase Admin SDK initialized")
+except Exception as e:
+    print(f"⚠️ Firebase Admin SDK error: {e}")
+    pyre_auth = None
+
+def init_google_cloud_clients():
+    """Initialize Firestore and Storage clients with hardcoded credentials"""
     try:
+        print("🔄 Creating Google Cloud credentials...")
+        
         credentials = service_account.Credentials.from_service_account_info(
-            SERVICE_ACCOUNT_INFO,
-            scopes=['https://www.googleapis.com/auth/datastore']
+            SERVICE_ACCOUNT_KEY,
+            scopes=['https://www.googleapis.com/auth/cloud-platform']
         )
         
-        # Test if it works
         if credentials.expired:
             credentials.refresh(Request())
+        print("✅ Credentials verified")
         
-        db = firestore.Client(credentials=credentials, project='emperorgarage')
-        print("✅ Firestore client initialized with hardcoded credentials")
-        return db
+        print("🔄 Initializing Firestore...")
+        firestore_client = firestore.Client(
+            credentials=credentials,
+            project='emperorgarage'
+        )
+        print("✅ Firestore client ready")
+        
+        print("🔄 Initializing Cloud Storage...")
+        storage_client = storage.Client(
+            credentials=credentials,
+            project='emperorgarage'
+        )
+        
+        bucket_name = "emperorgarage.firebasestorage.app"
+        bucket = storage_client.bucket(bucket_name)
+        
+        if bucket.exists():
+            print(f"✅ Storage bucket '{bucket_name}' exists")
+        else:
+            print(f"⚠️ Bucket '{bucket_name}' not found or not accessible")
+            # Try to list available buckets
+            print("Available buckets:")
+            for b in storage_client.list_buckets():
+                print(f"  - {b.name}")
+        
+        print("✅ Google Cloud clients initialized")
+        return firestore_client, storage_client, bucket, credentials
         
     except Exception as e:
-        print(f"❌ Error: {e}")
-        return None
+        print(f"❌ Error initializing Google Cloud clients: {e}")
+        return None, None, None, None
 
+firestore_client, storage_client, storage_bucket, google_creds = init_google_cloud_clients()
 
-
-
-db = firestore.Client(credentials=credentials, project='emperorgarage')bucket = storage.bucket()
-
-KEY_PATH = './serviceAccountKey.json' 
+KEY_PATH = './serviceAccountKey.json'
 
 def validate_key_file(path):
     """Check if the key file is valid"""
-    
     print(f"Checking: {path}")
     
-    # Check if file exists
     if not os.path.exists(path):
         print("❌ File does not exist")
         return False
     
-    # Check file size
     size = os.path.getsize(path)
     print(f"📄 File size: {size} bytes")
-    if size < 100:  # Too small
+    if size < 100:
         print("❌ File is too small - likely corrupted")
         return False
     
-    # Try to parse JSON
     try:
         with open(path, 'r') as f:
             data = json.load(f)
         
-        # Check required fields
         required_fields = ['private_key', 'private_key_id', 'client_email', 'project_id']
         missing = [f for f in required_fields if f not in data]
         if missing:
             print(f"❌ Missing required fields: {missing}")
             return False
         
-        # Check private key format
         private_key = data['private_key']
         if 'BEGIN PRIVATE KEY' not in private_key:
             print("❌ Invalid private key format")
-            print(f"   First 100 chars: {private_key[:100]}")
             return False
         
         print("✅ Key file appears valid")
@@ -115,16 +139,19 @@ def validate_key_file(path):
         print(f"❌ Error: {e}")
         return False
 
-# Run validation
 validate_key_file(KEY_PATH)
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './serviceAccountKey.json'
 
-credentials, project = default()
-if credentials.expired:
-    credentials.refresh(Request())
-    
-print("connected successfully")
+try:
+    default_creds, project = default()
+    if default_creds.expired:
+        default_creds.refresh(Request())
+    print("✅ Application Default Credentials ready")
+    print(f"   Project: {project}")
+except DefaultCredentialsError as e:
+    print(f"⚠️ ADC not available: {e}")
+
 firebaseConfig = {
     "apiKey": "AIzaSyCbi72B8iT5P0VAvE_eix6nsuDDzlqTVWk",     
     "authDomain": "emperorgarage.firebaseapp.com",  
