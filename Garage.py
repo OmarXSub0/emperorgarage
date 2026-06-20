@@ -55,7 +55,6 @@ except Exception as e:
 def init_google_cloud_clients():
     """Initialize Firestore and Storage clients with hardcoded credentials"""
     global db, bucket, storage_client, pyre_auth 
-    try:
         print("🔄 Creating Google Cloud credentials...")
         
         credentials = service_account.Credentials.from_service_account_info(
@@ -94,11 +93,7 @@ def init_google_cloud_clients():
         
         print("✅ Google Cloud clients initialized")
         return firestore_client, storage_client, bucket, credentials
-        
-    except Exception as e:
-        print(f"❌ Error initializing Google Cloud clients: {e}")
-        return None, None, None, None
-
+    
 firestore_client, storage_client, storage_bucket, google_creds = init_google_cloud_clients()
 
 KEY_PATH = './serviceAccountKey.json'
@@ -166,8 +161,6 @@ firebaseConfig = {
     "messagingSenderId": "405891329254", 
     "appId": "1:405891329254:web:8c511fbcccf25fd9d01f27",
 } 
-
-init_google_cloud_clients()
 
 @app.route('/static/placeholder.png')
 def placeholder_image():
