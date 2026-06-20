@@ -92,21 +92,16 @@ def init_google_cloud_clients():
                 print(f"  - {b.name}")
         
         print("✅ Google Cloud clients initialized")
-        return True
+        return db, storage_client, bucket, credentials
         
     except Exception as e:
         print(f"❌ Error initializing Google Cloud clients: {e}")
         import traceback
         traceback.print_exc()
-        return False
+        return None, None, None, None
 
 # Initialize the clients
-if init_google_cloud_clients():
-    print("All services initialized successfully!")
-    # Now you can use: db, bucket, storage_client directly
-else:
-    print("Failed to initialize services")
-    
+firestore_client, storage_client, storage_bucket, google_creds = init_google_cloud_clients()  
 KEY_PATH = './serviceAccountKey.json'
 
 def validate_key_file(path):
