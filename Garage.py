@@ -162,7 +162,7 @@ firebaseConfig = {
     "appId": "1:405891329254:web:8c511fbcccf25fd9d01f27",
 } 
 
-   db = firestore.Client(
+db = firestore.Client(
         credentials=credentials,
         project='emperorgarage'
     )
