@@ -167,6 +167,8 @@ firebaseConfig = {
     "appId": "1:405891329254:web:8c511fbcccf25fd9d01f27",
 } 
 
+initialize_services()
+
 @app.route('/static/placeholder.png')
 def placeholder_image():
     svg = '''<svg xmlns="http://www.w3.org/2000/svg" width="185" height="200" viewBox="0 0 300 200">
