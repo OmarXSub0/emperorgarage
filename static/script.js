@@ -107,6 +107,21 @@ function showMessage(msg, type) {
     }
 }
 
+function loadAd() {
+    document.getElementById('ad-container').style.display = 'block';
+
+    if (!window._adsbygoogleScriptLoaded) {
+      const script = document.createElement('script');
+      script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1070960410335549";
+      script.async = true;
+      script.crossOrigin = "anonymous";
+      document.head.appendChild(script);
+      window._adsbygoogleScriptLoaded = true;
+    }
+
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  }
+
 window.changeImage = function (section, productId, imageIndex, clickedThumb) {
     var productCard = clickedThumb.closest('.product-card');
 
