@@ -167,7 +167,7 @@ firebaseConfig = {
     "appId": "1:405891329254:web:8c511fbcccf25fd9d01f27",
 } 
 
-initialize_services()
+init_google_cloud_clients()
 
 @app.route('/static/placeholder.png')
 def placeholder_image():
