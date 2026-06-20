@@ -54,8 +54,9 @@ except Exception as e:
 
 def init_google_cloud_clients():
     """Initialize Firestore and Storage clients with hardcoded credentials"""
-    global db, bucket, storage_client, pyre_auth         
+    global db, bucket, storage_client, pyre_auth
     
+    try:
         credentials = service_account.Credentials.from_service_account_info(
             SERVICE_ACCOUNT_KEY,
             scopes=['https://www.googleapis.com/auth/cloud-platform']
@@ -66,7 +67,7 @@ def init_google_cloud_clients():
         print("✅ Credentials verified")
         
         print("🔄 Initializing Firestore...")
-        db= firestore.Client(
+        db = firestore.Client(
             credentials=credentials,
             project='emperorgarage'
         )
@@ -91,10 +92,21 @@ def init_google_cloud_clients():
                 print(f"  - {b.name}")
         
         print("✅ Google Cloud clients initialized")
-        return firestore_client, storage_client, bucket, credentials
-    
-firestore_client, storage_client, storage_bucket, google_creds = init_google_cloud_clients()
+        return True
+        
+    except Exception as e:
+        print(f"❌ Error initializing Google Cloud clients: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
 
+# Initialize the clients
+if init_google_cloud_clients():
+    print("All services initialized successfully!")
+    # Now you can use: db, bucket, storage_client directly
+else:
+    print("Failed to initialize services")
+    
 KEY_PATH = './serviceAccountKey.json'
 
 def validate_key_file(path):
