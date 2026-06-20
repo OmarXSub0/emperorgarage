@@ -62,8 +62,8 @@ def get_firestore_client():
 
 
 
-db = firestore.Client()
-bucket = storage.bucket()
+
+db = firestore.Client(credentials=credentials, project='emperorgarage')bucket = storage.bucket()
 
 KEY_PATH = './serviceAccountKey.json' 
 
