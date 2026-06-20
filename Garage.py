@@ -50,6 +50,7 @@ except Exception as e:
 
 def init_google_cloud_clients():
     """Initialize Firestore and Storage clients with hardcoded credentials"""
+    global db, bucket, storage_client, pyre_auth 
     try:
         print("🔄 Creating Google Cloud credentials...")
         
