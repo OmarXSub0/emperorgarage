@@ -13,8 +13,8 @@ from functools import wraps
 import uuid
 from dotenv import load_dotenv
 # Refresh credentials manually
+from google.auth import default
 from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
 
 
 load_dotenv()
@@ -28,8 +28,64 @@ firebase_admin.initialize_app(cred, {
 pyre_auth = auth
 db = firestore.client()
 bucket = storage.bucket()
-if cred and cred.expired and cred.refresh_token:
-    cred.refresh(Request())
+
+KEY_PATH = './serviceAccountKey.json'
+
+def validate_key_file(path):
+    """Check if the key file is valid"""
+    
+    print(f"Checking: {path}")
+    
+    # Check if file exists
+    if not os.path.exists(path):
+        print("❌ File does not exist")
+        return False
+    
+    # Check file size
+    size = os.path.getsize(path)
+    print(f"📄 File size: {size} bytes")
+    if size < 100:  # Too small
+        print("❌ File is too small - likely corrupted")
+        return False
+    
+    # Try to parse JSON
+    try:
+        with open(path, 'r') as f:
+            data = json.load(f)
+        
+        # Check required fields
+        required_fields = ['private_key', 'private_key_id', 'client_email', 'project_id']
+        missing = [f for f in required_fields if f not in data]
+        if missing:
+            print(f"❌ Missing required fields: {missing}")
+            return False
+        
+        # Check private key format
+        private_key = data['private_key']
+        if 'BEGIN PRIVATE KEY' not in private_key:
+            print("❌ Invalid private key format")
+            print(f"   First 100 chars: {private_key[:100]}")
+            return False
+        
+        print("✅ Key file appears valid")
+        print(f"   Service Account: {data['client_email']}")
+        print(f"   Project: {data['project_id']}")
+        return True
+        
+    except json.JSONDecodeError as e:
+        print(f"❌ Invalid JSON: {e}")
+        return False
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        return False
+
+validate_key_file(KEY_PATH)
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './serviceAccountKey.json'
+
+credentials, project = default()
+if credentials.expired:
+    credentials.refresh(Request())
     
 print("connected successfully")
 firebaseConfig = {
@@ -41,6 +97,10 @@ firebaseConfig = {
     "messagingSenderId": "405891329254", 
     "appId": "1:405891329254:web:8c511fbcccf25fd9d01f27",
 } 
+db = firestore.Client(
+        credentials=credentials,
+        project='emperorgarage'
+    )
 
 @app.route('/static/placeholder.png')
 def placeholder_image():
