@@ -1052,6 +1052,7 @@ textarea {
     padding: 0.75rem;
     background: #1a1a1a;
     border: 1px solid #00ff41;
+    -webkit-text-fill-color: #00ff41 !important;
     color: #00ff41;
     border-radius: 5px;
 }
@@ -1062,6 +1063,7 @@ textarea:focus {
     outline: none;
     border-color: #9b30ff;
     box-shadow: 0 0 10px #9b30ff;
+    -webkit-text-fill-color: #00ff41 !important;
 }
 
 .submit-btn {
