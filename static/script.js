@@ -1149,64 +1149,66 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // SIGNUP FORM
-    const signupForm = document.getElementById('signupForm');
-    if (signupForm) {
-        signupForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+   const signupForm = document.getElementById('signupForm');
+if (signupForm) {
+    signupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const passwordField = signupForm.querySelector('[name="password"]');
+        const password = passwordField.value;
+        const messageBox = document.getElementById('popupmessageS');
+        const spinner = document.getElementById('popupspinner');
+        const submitButton = signupForm.querySelector('button[type="submit"]');
 
-            const password = signupForm.querySelector('[name="password"]').value;
-            const messageBox = document.getElementById('popupmessageS');
-            const spinner = document.getElementById('popupspinner');
-            const submitButton = signupForm.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        if (spinner) spinner.classList.add('show');
 
-            submitButton.disabled = true;
-            if (spinner) spinner.classList.add('show');
+        function showMessage(message, type) {
+            if (messageBox) {
+                messageBox.textContent = message;
+                messageBox.className = `message ${type} show`;
+                setTimeout(() => {
+                    messageBox.classList.remove('show');
+                }, 3000);
+            } else {
+                alert(message);
+            }
+        }
 
-            function showMessage(message, type) {
-                if (messageBox) {
-                    messageBox.textContent = message;
-                    messageBox.className = `message ${type} show`;
-                    setTimeout(() => {
-                        messageBox.classList.remove('show');
-                    }, 3000);
-                } else {
-                    alert(message);
-                }
+        try {
+            const formData = {
+                business_name: signupForm.querySelector('[name="business_name"]')?.value || '',
+                email: signupForm.querySelector('[name="email"]')?.value,
+                phone: signupForm.querySelector('[name="phone"]')?.value || '',
+                business_type: signupForm.querySelector('[name="business_type"]')?.value,
+                password: password,
+            };
+
+            const response = await fetch('/api/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // clear password from DOM immediately after success
+                passwordField.value = '';
+
+                showMessage(result.message, 'success');
+                setTimeout(() => {
+                    window.location.href = '/dashboard';
+                }, 4000);
+            } else {
+                showMessage(result.message, 'error');
             }
 
-            try {
-                const formData = {
-                    business_name: signupForm.querySelector('[name="business_name"]')?.value || '',
-                    email: signupForm.querySelector('[name="email"]')?.value,
-                    phone: signupForm.querySelector('[name="phone"]')?.value || '',
-                    business_type: signupForm.querySelector('[name="business_type"]')?.value,
-                    password: password,
-                };
-
-                const response = await fetch('/api/signup', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    showMessage(result.message, 'success');
-                    setTimeout(() => {
-                        window.location.href = '/dashboard';
-                    }, 4000);
-                } else {
-                    showMessage(result.message, 'error');
-                }
-            } catch (error) {
-                console.error('Signup error:', error);
-                showMessage('Error submitting form: ' + error.message, 'error');
-            } finally {
-                submitButton.disabled = false;
-                if (spinner) spinner.classList.remove('show');
-            }
-        });
-    }
-});
-
+        } catch (error) {
+            console.error('Signup error:', error);
+            showMessage('Error submitting form: ' + error.message, 'error');
+        } finally {
+            submitButton.disabled = false;
+            if (spinner) spinner.classList.remove('show');
+        }
+    });
+}
