@@ -1149,8 +1149,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // SIGNUP FORM
- document.addEventListener('DOMContentLoaded', function () {
-
     const signupForm = document.getElementById('signupForm');
 
     if (signupForm) {
@@ -1213,6 +1211,5 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (spinner) spinner.classList.remove('show');
             }
         });
-    }
 
 });
