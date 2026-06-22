@@ -51,10 +51,6 @@ header {
     }
 }
 
-input::placeholder,
-textarea::placeholder {
-    color: #888888;
-}
 
 nav {
     display: flex;
