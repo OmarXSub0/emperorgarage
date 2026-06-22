@@ -1106,6 +1106,7 @@ textarea:focus {
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
     margin-bottom: 1rem;
+    color: #006400;
 }
 
 .product-info h3 {
