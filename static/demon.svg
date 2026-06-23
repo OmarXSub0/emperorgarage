@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Background -->
+  <rect width="32" height="32" rx="5" fill="#0a0a0a"/>
+
+  <!-- Hood top curve -->
+  <path d="M4,14 Q16,10 28,14" stroke="#e63946" stroke-width="1.2" fill="none"/>
+
+  <!-- Main body front face -->
+  <rect x="3" y="14" width="26" height="11" rx="1" fill="#1a1a1a"/>
+
+  <!-- Left headlight assembly (angular Demon style) -->
+  <path d="M3,14 L3,19 L10,19 L12,14 Z" fill="#111"/>
+  <path d="M4,15 L4,18 L9,18 L11,15 Z" fill="#e8e8ff" opacity="0.9"/>
+  <!-- DRL strip left -->
+  <rect x="4" y="14.5" width="7" height="1" rx="0.5" fill="#ffffff" opacity="0.7"/>
+
+  <!-- Right headlight assembly -->
+  <path d="M29,14 L29,19 L22,19 L20,14 Z" fill="#111"/>
+  <path d="M28,15 L28,18 L23,18 L21,15 Z" fill="#e8e8ff" opacity="0.9"/>
+  <!-- DRL strip right -->
+  <rect x="21" y="14.5" width="7" height="1" rx="0.5" fill="#ffffff" opacity="0.7"/>
+
+  <!-- Center grille -->
+  <rect x="10" y="14" width="12" height="7" rx="1" fill="#0d0d0d"/>
+  <!-- Grille mesh lines horizontal -->
+  <line x1="10" y1="15.5" x2="22" y2="15.5" stroke="#333" stroke-width="0.5"/>
+  <line x1="10" y1="17" x2="22" y2="17" stroke="#333" stroke-width="0.5"/>
+  <line x1="10" y1="18.5" x2="22" y2="18.5" stroke="#333" stroke-width="0.5"/>
+  <!-- Grille mesh lines vertical -->
+  <line x1="12.5" y1="14" x2="12.5" y2="21" stroke="#333" stroke-width="0.5"/>
+  <line x1="15" y1="14" x2="15" y2="21" stroke="#333" stroke-width="0.5"/>
+  <line x1="17" y1="14" x2="17" y2="21" stroke="#333" stroke-width="0.5"/>
+  <line x1="19.5" y1="14" x2="19.5" y2="21" stroke="#333" stroke-width="0.5"/>
+
+  <!-- Dodge crosshair on grille -->
+  <line x1="16" y1="14.2" x2="16" y2="20.8" stroke="#e63946" stroke-width="1"/>
+  <line x1="10.2" y1="17.5" x2="21.8" y2="17.5" stroke="#e63946" stroke-width="1"/>
+
+  <!-- Lower bumper -->
+  <rect x="3" y="21" width="26" height="4" rx="1" fill="#151515"/>
+  <!-- Bumper accent line -->
+  <rect x="3" y="21" width="26" height="0.8" fill="#e63946"/>
+
+  <!-- Front splitter -->
+  <rect x="5" y="24.5" width="22" height="1.5" rx="0.5" fill="#222"/>
+
+  <!-- EG licence plate style on bumper -->
+  <rect x="11" y="21.5" width="10" height="3" rx="0.5" fill="#f5f5f5"/>
+  <text x="16" y="24" 
+        font-family="Arial Black, Arial" 
+        font-weight="900" 
+        font-size="2.6" 
+        fill="#111" 
+        text-anchor="middle">EG</text>
+
+  <!-- Left fog light -->
+  <rect x="4" y="22" width="4" height="2" rx="0.5" fill="#ffdd57" opacity="0.8"/>
+  <!-- Right fog light -->
+  <rect x="24" y="22" width="4" height="2" rx="0.5" fill="#ffdd57" opacity="0.8"/>
+
+  <!-- Wheel arch hints bottom left -->
+  <path d="M3,28 Q5,25 8,25 L3,25 Z" fill="#0a0a0a"/>
+  <!-- Wheel arch hints bottom right -->
+  <path d="M29,28 Q27,25 24,25 L29,25 Z" fill="#0a0a0a"/>
+
+  <!-- Ground shadow -->
+  <ellipse cx="16" cy="30" rx="13" ry="1.5" fill="#000" opacity="0.5"/>
+</svg>
