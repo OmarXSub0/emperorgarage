@@ -1180,7 +1180,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 const formData = {
                     business_name: signupForm.querySelector('[name="business_name"]')?.value || '',
                     email: signupForm.querySelector('[name="email"]')?.value,
-                    phone: signupForm.querySelector('[name="phone"]')?.value || '',
                     business_type: signupForm.querySelector('[name="business_type"]')?.value,
                     password: password,
                 };
