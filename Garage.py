@@ -216,6 +216,9 @@ def index():
 def signup_page():
     return render_template('signup.html')
 
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy_policy.html')
 
 @app.route('/signin')
 def signin_page():
