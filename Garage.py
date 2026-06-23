@@ -29,8 +29,7 @@ if not app.secret_key:
         "Generate one with: python -c \"import secrets; print(secrets.token_hex(32))\""
     )
 
-# Path to the service account key file. This file should never be committed
-# to version control -- make sure it's in .gitignore.
+# service account key file should never be committe, make sure it's in .gitignore.
 KEY_PATH = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', './serviceAccountKey.json')
 
 db = None
