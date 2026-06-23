@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
     <title>EMPEROR_DE_GARAGE - Cars & Auto Spare Parts Marketplace</title>
     <meta name="description"
         content="EMPEROR  GARAGE - The largest marketplace for used cars and auto spare parts. Buy and sell vehicles, find genuine auto parts, spare parts, connect with trusted sellers countrywide.">
@@ -99,7 +99,7 @@
                 <h3>{{ car.name|escape }}</h3>
                 <p>{{ (car.description[:500] if car.description else 'No description available')|escape }}</p>
                 <div class="price">₵{{ "%.0f"|format(car.price|float) }}</div>
-                <button class="call-btn" onclick="loadAd()" data-product-name="{{ car.name|escape }}"
+                <button class="call-btn" onclick="loadAd()" data-product-name=" {{ car.name|escape }}"
                     data-product-type="car" data-product-phone="{{ car.phone }}"
                     data-product-location="{{ car.location }}">CONTACT</button>
             </div>
@@ -140,7 +140,7 @@
                 <h3>{{ part.name|escape }}</h3>
                 <p>{{ (part.description[:500] if part.description else 'No description available')|escape }}</p>
                 <div class="price">₵{{ "%.0f"|format(part.price|float) }}</div>
-                <button class="call-btn" onclick="loadAd()" data-product-name="{{ part.name|escape }}"
+                <button class="call-btn" onclick="loadAd()" data-product-name=" {{ part.name|escape }}"
                     data-product-type="part" data-product-phone="{{ part.phone }}"
                     data-product-location="{{ part.location }}">Call
                     Dealer</button>

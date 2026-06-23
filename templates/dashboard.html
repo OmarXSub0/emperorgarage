@@ -3,9 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
     <title>GARAGE - Seller Dashboard</title>
     <meta name="google-adsense-account" content="ca-pub-1070960410335549">
+    <meta name="color-scheme" content="light">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
@@ -39,7 +40,7 @@
                     <input type="number" name="price" placeholder="Price ₵ 62000" step="100.00" required>
                     <input type="number" name="stock" placeholder="Stock Quantity" required>
                     <input type="number" name="phone" placeholder="Phone" required>
-                    <input type="text" name="location" placeholder="Location eg.Accra-Taifa" required>
+                    <input type="text" name="location" placeholder="Location eg.Accra-Tantra" required>
                 </div>
                 <textarea name="description" placeholder="Product Description" rows="3" required></textarea>
                 <input type="file" name="image" accept="image/*">
@@ -49,7 +50,11 @@
                 <input type="file" name="image4" accept="image/*">
                 <input type="file" name="image5" accept="image/*">
                 <div id="popupspinner" class="spinner"></div>
+<<<<<<< HEAD
                 <button type="submit" onclick="loadAd()" class=" submit-btn">Add Product</button>
+=======
+                <button type="submit" onclick="loadAd()" class="submit-btn">Add Product</button>
+>>>>>>> e93b0f4b70e84be10bc4d0ff2693ff227dae0f8d
             </form>
             <div id="popupmessage" class="message"></div>
         </div>

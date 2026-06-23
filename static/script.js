@@ -112,10 +112,10 @@ function loadAd() {
 
     if (!window._adsbygoogleScriptLoaded) {
         const script = document.createElement('script');
-        script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1070960410335549";
-        script.async = true;
-        script.crossOrigin = "anonymous";
-        document.head.appendChild(script);
+        src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1070960410335549";
+        async = true;
+        crossOrigin = "anonymous";
+        document.head.appendChild();
         window._adsbygoogleScriptLoaded = true;
     }
 
@@ -1150,11 +1150,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // SIGNUP FORM
     const signupForm = document.getElementById('signupForm');
+
     if (signupForm) {
         signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const password = signupForm.querySelector('[name="password"]').value;
+            const passwordField = signupForm.querySelector('[name="password"]');
+            const password = passwordField.value;
             const messageBox = document.getElementById('popupmessageS');
             const spinner = document.getElementById('popupspinner');
             const submitButton = signupForm.querySelector('button[type="submit"]');
@@ -1178,7 +1180,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 const formData = {
                     business_name: signupForm.querySelector('[name="business_name"]')?.value || '',
                     email: signupForm.querySelector('[name="email"]')?.value,
-                    phone: signupForm.querySelector('[name="phone"]')?.value || '',
                     business_type: signupForm.querySelector('[name="business_type"]')?.value,
                     password: password,
                 };
@@ -1192,6 +1193,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const result = await response.json();
 
                 if (result.success) {
+                    passwordField.value = '';
                     showMessage(result.message, 'success');
                     setTimeout(() => {
                         window.location.href = '/dashboard';
@@ -1199,6 +1201,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     showMessage(result.message, 'error');
                 }
+
             } catch (error) {
                 console.error('Signup error:', error);
                 showMessage('Error submitting form: ' + error.message, 'error');
@@ -1209,4 +1212,3 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
-
