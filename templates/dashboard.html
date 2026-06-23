@@ -5,8 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
     <title>GARAGE - Seller Dashboard</title>
-    <meta name="google-adsense-account" content="ca-pub-1070960410335549">
-    <meta name="color-scheme" content="light">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1070960410335549"
+     crossorigin="anonymous"></script> 
+    <link rel="icon" type="image/svg+xml" href="/static/demon.svg">
+    <link rel="icon" type="image/x-icon" href="/static/demon.ico">
+    <link rel="apple-touch-icon" href="/static/demon_64.png">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
@@ -14,7 +17,7 @@
     <div class="background-overlay"></div>
 
     <header>
-        <h1 class="garage-title">EMPEROR_de_GARAGE</h1>
+        <h1 class="garage-title">EMPEROR GARAGE</h1>
         <nav>
             <a href="/" class="nav-link">🏠 Home</a>
             <span class="welcome">{{ business_name }}!</span>
@@ -50,11 +53,7 @@
                 <input type="file" name="image4" accept="image/*">
                 <input type="file" name="image5" accept="image/*">
                 <div id="popupspinner" class="spinner"></div>
-<<<<<<< HEAD
-                <button type="submit" onclick="loadAd()" class=" submit-btn">Add Product</button>
-=======
                 <button type="submit" onclick="loadAd()" class="submit-btn">Add Product</button>
->>>>>>> e93b0f4b70e84be10bc4d0ff2693ff227dae0f8d
             </form>
             <div id="popupmessage" class="message"></div>
         </div>
