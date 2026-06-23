@@ -99,8 +99,9 @@
                 <h3>{{ car.name|escape }}</h3>
                 <p>{{ (car.description[:500] if car.description else 'No description available')|escape }}</p>
                 <div class="price">₵{{ "%.0f"|format(car.price|float) }}</div>
-                <button class="call-btn" onclick="loadAd() data-product-name="{{ car.name|escape }}" data-product-type="car"
-                    data-product-phone="{{ car.phone }}" data-product-location="{{ car.location }}">CONTACT</button>
+                <button class="call-btn" onclick="loadAd()" data-product-name="{{ car.name|escape }}"
+                    data-product-type="car" data-product-phone="{{ car.phone }}"
+                    data-product-location="{{ car.location }}">CONTACT</button>
             </div>
             {% endfor %}
             {% else %}
@@ -139,8 +140,9 @@
                 <h3>{{ part.name|escape }}</h3>
                 <p>{{ (part.description[:500] if part.description else 'No description available')|escape }}</p>
                 <div class="price">₵{{ "%.0f"|format(part.price|float) }}</div>
-                <button class="call-btn" onclick="loadAd() data-product-name="{{ part.name|escape }}" data-product-type="part"
-                    data-product-phone="{{ part.phone }}" data-product-location="{{ part.location }}">Call
+                <button class="call-btn" onclick="loadAd()" data-product-name="{{ part.name|escape }}"
+                    data-product-type="part" data-product-phone="{{ part.phone }}"
+                    data-product-location="{{ part.location }}">Call
                     Dealer</button>
             </div>
             {% endfor %}
@@ -157,6 +159,9 @@
         <div class="brands-grid" id="brandsGrid"></div>
     </div>
 
+    <footer>
+        &copy; 2026 Emperor Garage ||<a href="/privacy">Privacy Policy</a>
+    </footer>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 
