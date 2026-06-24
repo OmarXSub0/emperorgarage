@@ -22,6 +22,24 @@ load_dotenv()
 
 app = Flask(__name__)
 
+@app.route('/sitemap.xml')
+def sitemap():
+    xml = '''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url><loc>https://emperorgarage.onrender.com/</loc></url>
+    <url><loc>https://emperorgarage.onrender.com/signup</loc></url>
+    <url><loc>https://emperorgarage.onrender.com/signin</loc></url>
+    <url><loc>https://emperorgarage.onrender.com/privacy</loc></url>
+</urlset>'''
+    return app.response_class(xml, mimetype='application/xml')
+    
+@app.route('/robots.txt')
+def robots():
+    txt = '''User-agent: *
+Allow: /
+Sitemap: https://emperorgarage.onrender.com/sitemap.xml'''
+    return app.response_class(txt, mimetype='text/plain')
+
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 if not app.secret_key:
     raise SystemExit(
